@@ -26,7 +26,7 @@ class ItemsController extends Controller
      */
     public function create()
     {
-        //
+        // This is only used inside laravel native views.
     }
 
     /**
@@ -78,7 +78,7 @@ class ItemsController extends Controller
      */
     public function edit($id)
     {
-        //
+        // this is only used inside laravel native views.
     }
 
     /**
@@ -90,7 +90,25 @@ class ItemsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'text' => 'required'
+        ]);
+
+        // Validate post request
+        if($validator->fails()) {
+            $response = array('response' => $validator->messages(), 'success' => false);
+            return $response;
+        } else {
+            // Find new item
+            $item = Item::find($id);
+            $item->text = $request->input('text');
+            $item->body = $request->input('body');
+            $item->save();
+
+            // This just returns the newly created item as a response, nothing else.
+            return response()->json($item);
+
+        }
     }
 
     /**
