@@ -37,7 +37,7 @@
         </form>
 
         <hr>
-
+        <h1>Items</h1>
         <ul id="items" class="list-group"></ul>
     </div>
 
@@ -112,7 +112,7 @@
                    $.each(items, function(key, item) {
                         output += `
                         <li class="list-group-item">
-                            ${item.id} <strong>${item.text}: </strong>${item.body} <a href="#" class="deleteLink" data-id="${item.id}">Delete</a>
+                           Item ID: <strong>${item.id}</strong> <p class="mb-0"><strong>${item.text}</strong></p><p>${item.body}</p><a href="#" class="deleteLink btn btn-danger" data-id="${item.id}">Delete Entry</a>
                         </li>
                         `
                    })
