@@ -63,6 +63,30 @@
 
             })
 
+            // Delete Item
+            $('body').on('click', '.deleteLink', function(e) {
+                e.preventDefault
+               // alert("delete")
+            let id = $(this).data('id')
+            deleteItem(id)
+            })
+
+            // Drop Item
+            function deleteItem(id){
+                $.ajax({
+                    method: 'POST',
+                    url:'http://localhost/laravel-simple-rest-api/public/api/items/' + id,
+                    data: {
+                        _method: 'DELETE'
+}
+                }).done(function() {
+                    window.alert('Item removed from database')
+
+                    // Reload page to show recent changes
+                    location.reload()
+                })
+            }
+
             // Insert Item
             function addItem(text, body) {
                 $.ajax({
@@ -83,12 +107,12 @@
                 $.ajax({
                     url:'http://localhost/laravel-simple-rest-api/public/api/items'
                 }).done(function (items) {
-                    console.table(items)
+                   // console.table(items)
                    let output = ''
                    $.each(items, function(key, item) {
                         output += `
                         <li class="list-group-item">
-                            <strong>${item.text}: </strong>${item.body}
+                            ${item.id} <strong>${item.text}: </strong>${item.body} <a href="#" class="deleteLink" data-id="${item.id}">Delete</a>
                         </li>
                         `
                    })
