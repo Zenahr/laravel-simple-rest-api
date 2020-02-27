@@ -22,6 +22,22 @@
             </ul>
         </nav>  
     <div class="container">
+        <h1>Add New Item</h1>
+        <form action="" id="itemForm">
+            <div class="form-group">
+                <label for="">Text</label>
+                <input type="text" id="text" class="form-control">
+            </div>
+        <form action="" id="itemForm">
+            <div class="form-group">
+                <label for="">Body</label>
+                <textarea type="text" id="body" class="form-control"></textarea>
+            </div>
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </form>
+
+        <hr>
+
         <ul id="items" class="list-group"></ul>
     </div>
 
@@ -35,6 +51,33 @@
     <script type="text/javascript">
         $(document).ready(function() {
             getItems()
+
+            // Submit handler
+            $('#itemForm').on('submit', function(e) {
+                e.preventDefault()
+
+                let text = $('#text').val()
+                let body = $('#body').val()
+
+                addItem(text, body)
+
+            })
+
+            // Insert Item
+            function addItem(text, body) {
+                $.ajax({
+                    method: 'POST',
+                    url:'http://localhost/laravel-simple-rest-api/public/api/items',
+                    data: {
+                        text: text, body: body
+                    }
+                }).done(function(item) {
+                    window.alert('Item Nr.' + item.id + ' added to the database.')
+
+                    // Reload page to show recent changes
+                    location.reload()
+                })
+            }
 
             function getItems() {
                 $.ajax({
